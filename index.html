@@ -97,7 +97,7 @@ tr:hover td{background:#f5f5f5}
 <tr><td>자유여행</td><td>✈️</td><td>원하는 칸 선택하여 이동!</td></tr>
 <tr><td>럭키 주사위</td><td>🎰</td><td>주사위 한 번 더 → 나온 수 = 보너스 점수!</td></tr>
 <tr><td>황금열쇠 (5개)</td><td>🔑</td><td>랜덤 이벤트 카드 뽑기 (아래 참고)</td></tr>
-<tr><td>퀴즈 칸</td><td>카테고리별</td><td>문제 맞히면 점수!</td></tr>
+<tr><td>퀴즈 칸</td><td>자동 배정</td><td>문제 맞히면 점수! (이모지·색상 AI가 자동 생성)</td></tr>
 <tr><td>콤보</td><td>🔥</td><td>2연속 정답부터 +1점 추가!</td></tr>
 </table>
 
@@ -120,15 +120,20 @@ tr:hover td{background:#f5f5f5}
 <div class="step-row"><span class="step-num">1</span><div>
 <b>문제 준비하기</b><br>
 수업 내용으로 <b>카테고리 2~5개</b>, 카테고리당 <b>10문제 내외</b> 준비<br>
-보기 4개(또는 O/X), 정답 1개, 카테고리별 대표 이모지 1개
+보기 4개(또는 O/X), 정답 1개만 적으면 됨 — 이모지·색상은 AI가 알아서 배정!
 </div></div>
 
-<div class="highlight">💡 <b>팁:</b> 문제 만들기 귀찮으면 AI에게 먼저 <i>"○○ 단원 내용으로 4지선다 퀴즈 40문제 만들어줘"</i>라고 요청 → 그 결과를 프롬프트에 붙여넣기!</div>
+<div class="highlight">💡 <b>문제 만드는 3가지 방법 (편하신 방법으로 선택하세요)</b><br><br>
+<b>방법 ①</b> 직접 작성 — 카테고리 이름 + 문제를 직접 적기<br>
+<b>방법 ②</b> AI 자동 생성 — 카테고리 이름만 적고 <i>"카테고리별 10문제씩 자동 생성해줘"</i><br>
+<b>방법 ③</b> 교과서 PDF 첨부 — 교과서 PDF 파일을 함께 올리고 <i>"이 교과서 내용 참고해서 문제 만들어줘"</i><br>
+<span style="font-size:13px;color:#888">　③은 Claude, ChatGPT 모두 파일 첨부 가능합니다. 교과서 통째로 넣으셔도 됩니다.</span>
+</div>
 
 <div class="step-row"><span class="step-num">2</span><div>
 <b>아래 프롬프트의 <span style="color:#e65100">[📝]</span> 부분만 수정 → AI에게 보내기</b><br>
 프롬프트를 통째로 복사 → <span style="color:#e65100">[📝]</span> 부분만 내 수업에 맞게 교체 → 전송<br>
-<b>⚠️ "게임 시스템" 부분은 절대 건드리지 마세요!</b>
+<b>⚠️ "게임 시스템" 부분은 그대로 두시면 됩니다!</b>
 </div></div>
 
 <div class="step-row"><span class="step-num">3</span><div>
@@ -145,7 +150,7 @@ tr:hover td{background:#f5f5f5}
 <h2 id="prompt">4. ✂️ 복사용 프롬프트</h2>
 <p class="desc">아래 박스를 <b>통째로 복사</b>한 뒤, <span style="color:#e65100;font-weight:700">[📝]</span> 부분만 내 수업에 맞게 바꿔서 AI에게 보내세요.</p>
 
-<div class="prompt-box" id="prompt-text"><button class="copy-btn print-hide" onclick="copyPrompt()">📋 프롬프트 복사</button>
+<div class="prompt-box" id="prompt-text"><button class="copy-btn print-hide" onclick="copyBox('prompt-text')">📋 프롬프트 복사</button>
 한국어 전용 단일 HTML 파일 인터랙티브 보드게임을 만들어줘.
 
 ■ 게임 정보
@@ -158,26 +163,29 @@ tr:hover td{background:#f5f5f5}
 카테고리별 10문제 내외. 보기 4개(또는 O/X 2개), 정답 1개.
 글자를 모르는 학생도 이모지만 보고 카테고리를 직관적으로 구분할 수 있어야 함.
 
-<span class="editable">[카테고리1] [📝 아이콘+이름] / [📝 칸 배경색] / 정답 시 +1점
-예시 → 🪙 동전 퀴즈 / 노랑 / +1점
+<span class="editable">[카테고리1] [📝 카테고리 이름] / 정답 시 +1점
 
   1. [📝 문제]
      ①[보기] ②[보기] ③[보기] ④[보기] → 정답: [📝 번호]
   2. ...
   (10문제 내외)
 
-[카테고리2] [📝 아이콘+이름] / [📝 칸 배경색] / 정답 시 +1점
+[카테고리2] [📝 카테고리 이름] / 정답 시 +1점
   1. ...
 
-[카테고리3] [📝 아이콘+이름] / [📝 칸 배경색] / 정답 시 +1점
+[카테고리3] [📝 카테고리 이름] / 정답 시 +1점
   1. ...
 
-[카테고리4 - 고배점] [📝 아이콘+이름] / [📝 칸 배경색] / 정답 시 +2점
+[카테고리4 - 고배점] [📝 카테고리 이름] / 정답 시 +2점
   1. ...</span>
 
 <span class="comment">※ 카테고리는 2~5개 자유. 고배점은 선택사항.
-※ 문제를 직접 안 적고 AI에게 자동 생성시키려면:
-   "위 단원 내용으로 카테고리별 10문제씩 자동 생성해줘. 난이도는 쉽게."</span>
+※ 각 카테고리의 대표 이모지와 칸 배경색은 AI가 카테고리 주제에 맞게 자동 생성할 것.
+   (예: 음식 카테고리 → 🍜, 교통 카테고리 → 🚌, 색상은 카테고리별로 충분히 구분되는 밝은 색으로)
+※ 문제 작성 방법 (3가지 중 택1):
+   ❶ 위처럼 직접 작성
+   ❷ "위 단원 내용으로 카테고리별 10문제씩 자동 생성해줘. 난이도는 쉽게."
+   ❸ 교과서 PDF를 이 메시지에 함께 첨부하고: "첨부한 교과서 내용을 참고해서 카테고리별 10문제씩 만들어줘."</span>
 
 
 ■ 게임 시스템 <span class="sys">(⚠️ 이 아래는 수정하지 마세요)</span>
@@ -201,7 +209,10 @@ tr:hover td{background:#f5f5f5}
     7) 🌀 랜덤 칸으로 워프
     8) 😈 점수 1점 도둑 (0 이하로는 안 내려감)
   · 황금열쇠 팝업에서 카드 뒤집기 애니메이션 연출 후 결과 표시
-- 나머지 31칸 = 퀴즈 카테고리별 균등 배분, 아이콘+배경색으로 시각 구분
+- 나머지 31칸 = 퀴즈 카테고리별 균등 배분
+  · 각 카테고리의 대표 이모지와 칸 배경색은 카테고리 주제에 맞게 자동 선정
+  · 이모지: 카테고리 내용을 직관적으로 나타내는 것 (글자를 모르는 학생도 구분 가능)
+  · 배경색: 카테고리별로 충분히 대비되는 밝은 파스텔톤, 서로 헷갈리지 않는 색상 조합
 - 보드 순환 (핵심):
   · 40칸을 지나면 출발(0번)로 돌아와 2바퀴째 계속 진행 (종료 없음, 턴 소진 시만 종료)
   · 칸 위치 = pos % 40 으로 계산하여 토큰 배치·칸 효과 모두 정상 동작
@@ -290,7 +301,7 @@ tr:hover td{background:#f5f5f5}
 <!-- ===== 5 ===== -->
 <h2 id="example">5. 작성 예시</h2>
 <div class="card">
-<h3>예시 A: 수학 "화폐" 단원</h3>
+<h3>예시 A: 직접 작성</h3>
 <div class="example-box">■ 게임 정보
 - 게임 제목: 💰 돈 계산 보드게임
 - 수업 과목/단원: 수학 5단원 "화폐"
@@ -298,7 +309,7 @@ tr:hover td{background:#f5f5f5}
 
 ■ 퀴즈 카테고리 및 문제
 
-[카테고리1] 🪙 동전 퀴즈 / 노랑 / +1점
+[카테고리1] 동전 퀴즈 / +1점
 
   1. 100원짜리 동전 3개는 얼마?
      ①200원 ②300원 ③400원 ④500원 → 정답: ②
@@ -306,24 +317,41 @@ tr:hover td{background:#f5f5f5}
      ①10원 ②50원 ③100원 ④500원 → 정답: ④
   3. ... (10문제)
 
-[카테고리2] 💵 지폐 퀴즈 / 파랑 / +1점
+[카테고리2] 지폐 퀴즈 / +1점
   (10문제)
 
-[카테고리3] 🛒 물건사기 퀴즈 / 보라 / +1점
+[카테고리3] 물건사기 퀴즈 / +1점
   (10문제)
 
-[카테고리4] ⚠️ 거스름돈 / 빨강 / +2점
+[카테고리4] 거스름돈 문제 / +2점
   (10문제)</div>
 
-<h3>예시 B: 문제 자동 생성</h3>
-<p>문제를 직접 만들기 귀찮다면, 카테고리만 정하고 이렇게 적으면 됩니다:</p>
-<div class="example-box">[카테고리1] 👋 인사말 퀴즈 / 노랑 / +1점
-[카테고리2] 🙏 부탁하기 퀴즈 / 파랑 / +1점
-[카테고리3] 😊 감정 표현 퀴즈 / 보라 / +1점
-[카테고리4] ⚠️ 이럴 땐 어떻게? / 빨강 / +2점
+<h3>예시 B: AI 자동 생성 (카테고리만 적기)</h3>
+<p>카테고리 이름만 정해두시면, AI가 문제를 자동으로 생성합니다. 아래 프롬프트를 복사해서 <b>게임 프롬프트의 "퀴즈 카테고리 및 문제" 칸에</b> 붙여넣으세요:</p>
+<div class="prompt-box" id="prompt-method2"><button class="copy-btn print-hide" onclick="copyBox('prompt-method2')">📋 복사</button>
+[카테고리1] <span class="editable">[📝 카테고리 이름]</span> / +1점
+[카테고리2] <span class="editable">[📝 카테고리 이름]</span> / +1점
+[카테고리3] <span class="editable">[📝 카테고리 이름]</span> / +1점
+[카테고리4 - 고배점] <span class="editable">[📝 카테고리 이름]</span> / +2점
 
-※ 위 카테고리에 맞춰 카테고리별 10문제씩 자동 생성해줘.
-   난이도 쉽게, 보기 4개, 특수학급 학생 수준.</div>
+위 카테고리에 맞춰 카테고리별 10문제씩 자동 생성해줘.
+보기 4개, 정답 1개, 난이도는 <span class="editable">[📝 쉽게/보통/어렵게]</span>, <span class="editable">[📝 대상 학생 수준 설명]</span> 수준.</div>
+
+<h3>예시 C: 교과서 PDF 첨부</h3>
+<p>교과서 PDF를 함께 올리시면, AI가 교과서 내용에서 문제를 추출하여 구성합니다. 아래 프롬프트를 <b>게임 프롬프트의 "퀴즈 카테고리 및 문제" 칸에</b> 붙여넣으세요:</p>
+<div class="prompt-box" id="prompt-method3"><button class="copy-btn print-hide" onclick="copyBox('prompt-method3')">📋 복사</button>
+<span class="comment">(⬆️ 이 메시지에 교과서 PDF 파일을 함께 첨부합니다)</span>
+
+첨부한 교과서에서 <span class="editable">[📝 해당 단원명, 예: 5단원 "화폐"]</span> 내용을 참고해서
+아래 카테고리별로 10문제씩 만들어줘.
+
+[카테고리1] <span class="editable">[📝 카테고리 이름]</span> / +1점
+[카테고리2] <span class="editable">[📝 카테고리 이름]</span> / +1점
+[카테고리3] <span class="editable">[📝 카테고리 이름]</span> / +1점
+[카테고리4 - 고배점] <span class="editable">[📝 카테고리 이름]</span> / +2점
+
+보기 4개, 정답 1개, 교과서 본문에 나오는 핵심 내용 위주로 출제.
+난이도는 <span class="editable">[📝 쉽게/보통/어렵게]</span>, <span class="editable">[📝 대상 학생 수준 설명]</span> 수준.</div>
 </div>
 
 <!-- ===== 6 ===== -->
@@ -331,13 +359,13 @@ tr:hover td{background:#f5f5f5}
 <div class="card">
 <dl class="faq">
 <dt>Q. 카테고리를 2개만 해도 되나요?</dt>
-<dd>네. 2~5개 자유입니다. 3개 이상이면 보드가 더 다양해집니다.</dd>
+<dd>네. 2~5개 자유롭게 설정하실 수 있습니다. 3개 이상이면 보드가 더 다양해집니다.</dd>
 
 <dt>Q. 고배점 카테고리 꼭 있어야 하나요?</dt>
-<dd>아니요. 전부 +1점으로 통일해도 됩니다.</dd>
+<dd>아니요. 전부 +1점으로 통일하셔도 무방합니다.</dd>
 
 <dt>Q. AI가 코드를 잘못 만들면?</dt>
-<dd>"오류 점검하고 수정해줘"라고 한 번 더 보내세요.</dd>
+<dd>"오류 점검하고 수정해줘"라고 한 번 더 보내시면 됩니다.</dd>
 
 <dt>Q. 마이크가 안 켜져요.</dt>
 <dd>AI 미리보기 화면에서는 마이크가 차단됩니다.<br>
@@ -347,13 +375,16 @@ tr:hover td{background:#f5f5f5}
 <dd><code>Ctrl + +</code>로 확대하거나, <code>F11</code>로 전체화면 전환하세요.</dd>
 
 <dt>Q. 문제를 나중에 수정하고 싶어요.</dt>
-<dd>AI에게 수정할 문제와 함께 "이 문제를 ○○로 바꿔줘"라고 보내는 게 편합니다.</dd>
+<dd>AI에게 수정할 문제와 함께 "이 문제를 ○○로 바꿔줘"라고 보내시는 게 가장 편리합니다.</dd>
 
 <dt>Q. 학생이 보드를 여러 바퀴 도나요?</dt>
 <dd>네. 턴이 남아있는 한 계속 돕니다. 출발 칸을 지날 때마다 +1점, 퀴즈·황금열쇠도 매번 발동됩니다.</dd>
 
 <dt>Q. 어떤 AI를 써야 하나요?</dt>
-<dd><b>Claude(claude.ai)</b> 추천. 아티팩트로 바로 미리보기 가능합니다.<br>ChatGPT(chatgpt.com)도 사용 가능합니다.</dd>
+<dd><b>Claude(claude.ai)</b> 추천. 아티팩트로 바로 미리보기 가능합니다.<br>ChatGPT(chatgpt.com)도 사용 가능합니다. 둘 다 PDF 첨부를 지원합니다.</dd>
+
+<dt>Q. 교과서 PDF를 통째로 넣어도 되나요?</dt>
+<dd>네. AI가 알아서 해당 단원에서 퀴즈 내용을 추출합니다. 특정 단원만 원하시면 "○단원 내용만 참고해줘"라고 한마디 추가해 주세요.</dd>
 </dl>
 </div>
 
@@ -364,29 +395,19 @@ tr:hover td{background:#f5f5f5}
 </div>
 
 <script>
-function copyPrompt(){
-const box=document.getElementById('prompt-text');
-// extract pure text without button
-let text=box.innerText;
-// remove the copy button text
-text=text.replace('📋 프롬프트 복사','').trim();
+function copyBox(id){
+const box=document.getElementById(id);
+const btn=box.querySelector('.copy-btn');
+const origText=btn.textContent;
+let text=box.innerText.replace(origText,'').replace('✅ 복사 완료!','').trim();
 navigator.clipboard.writeText(text).then(()=>{
-const btn=box.querySelector('.copy-btn');
-btn.textContent='✅ 복사 완료!';
-btn.classList.add('copied');
-setTimeout(()=>{btn.textContent='📋 프롬프트 복사';btn.classList.remove('copied')},2000);
+btn.textContent='✅ 복사 완료!';btn.classList.add('copied');
+setTimeout(()=>{btn.textContent=origText;btn.classList.remove('copied')},2000);
 }).catch(()=>{
-// fallback
-const ta=document.createElement('textarea');
-ta.value=text;
-document.body.appendChild(ta);
-ta.select();
-document.execCommand('copy');
-document.body.removeChild(ta);
-const btn=box.querySelector('.copy-btn');
-btn.textContent='✅ 복사 완료!';
-btn.classList.add('copied');
-setTimeout(()=>{btn.textContent='📋 프롬프트 복사';btn.classList.remove('copied')},2000);
+const ta=document.createElement('textarea');ta.value=text;
+document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+btn.textContent='✅ 복사 완료!';btn.classList.add('copied');
+setTimeout(()=>{btn.textContent=origText;btn.classList.remove('copied')},2000);
 });
 }
 </script>
